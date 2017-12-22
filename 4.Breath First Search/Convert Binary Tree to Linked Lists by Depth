@@ -1,0 +1,74 @@
+/*
+Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
+
+Have you met this question in a real interview? Yes
+Example
+Given binary tree:
+
+    1
+   / \
+  2   3
+ /
+4
+return
+
+[
+  1->null,
+  2->3->null,
+  4->null
+]
+Tags 
+Linked List Binary Tree Breadth First Search
+Related Problems 
+Easy Flatten Binary Tree to Linked List 33 %
+Medium Convert Binary Search Tree to Doubly Linked List 30 %
+*/
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    /**
+     * @param root the root of binary tree
+     * @return a lists of linked list
+     */
+    public List<ListNode> binaryTreeToLists(TreeNode root) {
+        // Write your code here
+        List<ListNode> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ListNode level = new ListNode(0), curt = level;
+            for (int i = 0; i < size; i ++) {
+                TreeNode treeNode = queue.poll();
+                curt.next = new ListNode(treeNode.val);
+                curt = curt.next;
+                if (treeNode.left != null) {
+                    queue.offer(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    queue.offer(treeNode.right);
+                }
+            }
+            ans.add(level.next);
+        }
+        return ans;
+    }
+}
