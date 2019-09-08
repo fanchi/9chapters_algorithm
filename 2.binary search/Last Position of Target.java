@@ -32,10 +32,8 @@ public class Solution {
         int start = 0, end = nums.length - 1;
         while (start + 1 < end) {
             int mid = start + (end -start) / 2;
-            if (nums[mid] == target) {
-                start = mid;
-            }
-            else if (nums[mid] < target) {
+            # if meet the condition, push right
+            if (nums[mid] <= target) {
                 start = mid;
             }
             else {
